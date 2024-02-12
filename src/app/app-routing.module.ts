@@ -5,12 +5,13 @@ import { RegisterComponent } from './components/register/register.component';
 import { MeComponent } from './components/me/me.component';
 import { authGuard } from './guards/auth.guard';
 import { notAuthGuard } from './guards/not-auth.guard';
+import { UserResolver } from './resolvers/user.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent ,pathMatch: 'full',canActivate: [notAuthGuard]},
   { path:'register',component:RegisterComponent ,pathMatch: 'full',canActivate: [notAuthGuard]},
   { path: '', redirectTo: '/me', pathMatch: 'full' },
-  { path:'me',component:MeComponent ,pathMatch: 'full',canActivate: [authGuard]}
+  { path:'me',component:MeComponent ,pathMatch: 'full',canActivate: [authGuard],resolve: { user:UserResolver }}
 ];
 
 @NgModule({

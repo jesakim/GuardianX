@@ -7,7 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MeComponent } from './components/me/me.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { RefreshTokenInterceptor } from './interceptor/refresh-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true},
+    // {provide: HTTP_INTERCEPTORS,useClass: RefreshTokenInterceptor,multi:true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

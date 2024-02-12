@@ -78,8 +78,13 @@ form h3{
   background: #4070f4;
   cursor: pointer;
 }
-.input-box.button input:hover{
+.input-box.button input:hover :not(:disabled){
   background: #0e4bf1;
+}
+
+.input-box.button :disabled {
+  background: #c7bebe;
+  cursor: not-allowed;
 }
 form .text h3{
  color: #333;
@@ -92,4 +97,9 @@ form .text h3 a{
 }
 form .text h3 a:hover{
   text-decoration: underline;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
 }
