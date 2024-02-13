@@ -28,8 +28,8 @@ export class MeComponent {
   ngOnInit() {
     this.route.data.subscribe(data=>{
       this.user = data['user'].result;
-      console.log(this.user);
-    })
+    });
+    
   }
 
   logout(){

@@ -9,7 +9,7 @@ import { MeComponent } from './components/me/me.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { RefreshTokenInterceptor } from './interceptor/refresh-token.interceptor';
+import { LogoutInterceptor } from './interceptor/logout.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { RefreshTokenInterceptor } from './interceptor/refresh-token.interceptor
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true},
-    // {provide: HTTP_INTERCEPTORS,useClass: RefreshTokenInterceptor,multi:true},
+    {provide: HTTP_INTERCEPTORS,useClass: LogoutInterceptor,multi:true},
   ],
   bootstrap: [AppComponent]
 })

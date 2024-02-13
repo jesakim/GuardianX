@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { RegisterDto } from '../models/register.dto';
 import { Observable } from 'rxjs';
 import { Response } from '../utils/response.interface';
@@ -12,10 +12,12 @@ import { LoginDto } from '../models/login.dto';
 export class AuthService {
 
   private apiUrl = 'http://localhost:8080/api/auth';
+  private httpWithoutInterceptor = new HttpClient(this.handler);
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private handler: HttpBackend,
   ){}
 
 
@@ -51,6 +53,7 @@ export class AuthService {
   }
 
   refreshToken(dto:any): Observable<Response<any>> {
-    return this.http.post<any>(`${this.apiUrl}/refresh`,dto);
+    return this.httpWithoutInterceptor.post<any>(`${this.apiUrl}/refresh`,dto);
   }
+
 }

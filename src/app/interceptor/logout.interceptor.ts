@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { Token } from '@angular/compiler';
 
 @Injectable()
-export class RefreshTokenInterceptor implements HttpInterceptor {
+export class LogoutInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
@@ -24,22 +24,10 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       
       catchError(error=> {
-        if (!this.refreshCount && error.status === 403) {
-          this.refreshCount++;
-          var token = this.authService.getToken();
-          // this.authService.removeToken();
-          debugger;
-          this.authService.refreshToken({
-            token: token
-          }).subscribe(response=>{
-            console.log('ref',response);
-            this.refreshCount = 0;
-            token = response.result.token;
-            this.authService.saveToken(response.result.token);
-          }
-          );
-          debugger;
-          // console.log('ref',error);
+        
+        
+        if (error.status === 403) {
+          this.authService.logout();
         } else {
           return throwError(error);
         }
